@@ -36,16 +36,29 @@ namespace oportunidade
             {
                 foreach (var noticia in noticias.OrderBy(o => o.Published))
                 {
-                    var cont = noticia.Description.Split(" ");
+                    var split = noticia.Description.Split("<p>");
+                    var strAux = string.Empty;
+                    if (split[0] != null && split[1] != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(split[0]))
+                        {
+                            strAux = split[0];
+                        }
+                        else
+                        {
+                            strAux = split[1];
+                        }
+                    }
+                    var cont = strAux.Split(" ");
                     if (cont.Any())
                     {
                         retorno.Topicos.Add(new Topicos
                         {
                             Titulo = noticia.Title,
-                            QuantidadePalavas = cont.Length
+                            QuantidadePalavas = cont.Count(w => w.Length > 3)
                         });
 
-                        strBuild.Append(noticia.Description);
+                        strBuild.Append(strAux);
                     }
 
                 }
@@ -59,7 +72,7 @@ namespace oportunidade
             var retorno = new List<string>();
             var analise = new List<Topicos>();
             var topico = texto.Split(" ");
-            foreach (var palavra in topico.Distinct())
+            foreach (var palavra in topico.Where(w => w.Length > 3).Distinct())
             {
                 analise.Add(new Topicos
                 {
