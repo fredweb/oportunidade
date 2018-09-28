@@ -14,6 +14,48 @@ namespace oportunidade
 {
     internal class Program
     {
+        private static readonly string[] preposicoes = new[]
+        {
+            " A ",
+            " O ",
+            " E ",
+            " É ",
+            " Ante ",
+            " Quais ",
+            " Quando ",
+             " ao ",
+             " aos ",
+             " aonde ",
+              " aonde ",
+            " Mais ",
+            " Pois ",
+            " Após ",
+            " Até ",
+            " Com ",
+            " Contra ",
+            " De ",
+            " Do ",
+            " Da ",
+            " Desde ",
+            " Em ",
+            " Entre ",
+            " Para ",
+            " Per ",
+            " Perante ",
+            " Por ",
+            " Sem ",
+            " Sob ",
+            " Sobre ",
+             " Trás ",
+             " Afora ",
+             " Conforme ",
+             " Consoante ",
+             " Exceto ",
+             " Salvo ",
+             " Malgrado ",
+             " Malgrado "
+        };
+
         private static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -49,6 +91,13 @@ namespace oportunidade
                             strAux = split[1];
                         }
                     }
+
+                    foreach (var proposicao in preposicoes)
+                    {
+                        if (strAux.ToUpper().Contains(proposicao.ToUpper()))
+                            strAux = strAux.ToUpper().Replace(proposicao.ToUpper(), " ");
+                    }
+
                     var cont = strAux.Split(" ");
                     if (cont.Any())
                     {
@@ -60,7 +109,6 @@ namespace oportunidade
 
                         strBuild.Append(strAux);
                     }
-
                 }
                 retorno.PrincipaisPalavras = CatalogarPalavras(strBuild.ToString());
             }
